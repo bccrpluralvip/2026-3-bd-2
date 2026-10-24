@@ -1,0 +1,11 @@
+set transaction name 'MyTransactionName';
+update my_departments set manager_id = 115 where department_id = 30;
+savepoint after_update_department_30;
+update my_departments set manager_id = 105 where department_id = 60;
+savepoint after_update_department_it;
+update my_departments set manager_id = 108 where department_id = 80;
+rollback to after_update_department_30;
+--savepoint after_update_department_it;
+update my_departments set manager_id = manager_id + 100 where manager_id < 200;
+select * from my_departments where department_id in (30, 60, 80) or manager_id < 200;
+rollback;
